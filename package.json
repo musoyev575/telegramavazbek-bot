@@ -1,0 +1,38 @@
+{
+  "name": "telefon-store-bot",
+  "version": "1.0.0",
+  "description": "Telefon sotuv magazini uchun Telegram bot + admin web panel (O'zbek tilida)",
+  "type": "module",
+  "main": "src/index.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "bot": "node src/index.js --bot-only",
+    "admin": "node src/index.js --admin-only",
+    "seed": "node src/database/seed.js",
+    "backup": "node scripts/backup.js",
+    "test": "node --test",
+    "check": "node scripts/check-modules.js"
+  },
+  "keywords": [
+    "telegram",
+    "bot",
+    "telegraf",
+    "shop",
+    "uzbekistan"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "better-sqlite3": "^12.4.1",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "multer": "^2.0.2",
+    "telegraf": "^4.16.3"
+  },
+  "allowScripts": {
+    "better-sqlite3@12.11.1": true
+  }
+}

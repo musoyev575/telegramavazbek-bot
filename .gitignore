@@ -1,0 +1,21 @@
+node_modules/
+.env
+.env.local
+*.log
+logs/
+storage/db/*.sqlite
+storage/db/*.sqlite-shm
+storage/db/*.sqlite-wal
+storage/backups/
+!storage/backups/.gitkeep
+storage/uploads/*
+!storage/uploads/.gitkeep
+coverage/
+.DS_Store
+Thumbs.db
+
+# Katta binary vositalar (aloqida yuklab olinadi)
+tools/*.exe
+
+# Ichki vosita artefaktlari
+.freebuff/

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="uz">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Kirish — Telefon Store admin panel</title>
+    <link rel="stylesheet" href="/css/app.css" />
+    <link rel="icon" href="data:," />
+  </head>
+  <body>
+    <main class="auth">
+      <section class="auth-card">
+        <div class="auth-logo">
+          <span>📱</span>
+          <div>
+            <strong>Telefon Store</strong>
+            <small>Administrator paneli</small>
+          </div>
+        </div>
+
+        <form id="login-form" autocomplete="on" novalidate>
+          <div class="field">
+            <label for="username">Login</label>
+            <input id="username" name="username" type="text" autocomplete="username" required autofocus />
+          </div>
+          <div class="field">
+            <label for="password">Parol</label>
+            <input id="password" name="password" type="password" autocomplete="current-password" required />
+          </div>
+
+          <p id="error" class="hint" style="color: #fecaca; min-height: 18px"></p>
+
+          <button id="submit" class="btn primary" type="submit" style="width: 100%; justify-content: center">
+            Kirish
+          </button>
+        </form>
+
+        <p class="auth-hint">
+          Parolni unutgan bo‘lsangiz, serverdagi administratorga murojaat qiling yoki bazadagi
+          <span class="mono">admins</span> jadvalini yangilang.
+        </p>
+      </section>
+    </main>
+
+    <script src="/js/login.js" type="module"></script>
+  </body>
+</html>

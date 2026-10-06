@@ -1,0 +1,52 @@
+[Unit]
+Description=Telefon Store — Telegram bot va admin panel (24/7)
+Documentation=file:///opt/telefon-bot/docs/DEPLOY.md
+After=network-online.target
+Wants=network-online.target
+
+# Ketma-ket qulashlarda cheksiz restart halqasi bo'lmasligi uchun:
+StartLimitIntervalSec=300
+StartLimitBurst=10
+
+[Service]
+Type=simple
+User=telefon
+Group=telefon
+WorkingDirectory=/opt/telefon-bot
+ExecStart=/usr/bin/node src/index.js
+
+# .env faylini ilova o'zi o'qiydi (dotenv). Muhim qiymatlarni bu yerda majburlaymiz:
+Environment=NODE_ENV=production
+Environment=LOG_LEVEL=info
+Environment=LOG_RETENTION_DAYS=14
+
+# Jarayon qulasa yoki bot uzilsa — avtomatik qayta ishga tushadi
+Restart=always
+RestartSec=10
+
+# Graceful shutdown (src/index.js SIGTERM ni ushlaydi va bazani yopadi)
+KillSignal=SIGTERM
+TimeoutStopSec=20
+
+# --- Xavfsizlik: jarayon faqat kerakli papkalarga yozadi ---
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/telefon-bot/storage /opt/telefon-bot/logs
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+RestrictNamespaces=true
+LockPersonality=true
+CapabilityBoundingSet=
+AmbientCapabilities=
+
+# Loglar journald orqali: journalctl -u telefon-bot -f
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=telefon-bot
+
+[Install]
+WantedBy=multi-user.target

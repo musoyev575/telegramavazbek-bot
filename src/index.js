@@ -10,6 +10,8 @@ import config from './config/index.js';
 import logger from './utils/logger.js';
 import { closeDb } from './database/db.js';
 import { seedIfEmpty } from './database/seed.js';
+import { hashSync } from 'bcryptjs';
+import adminModel from './models/adminModel.js';
 import { createBot, startBot, stopBot } from './bot/index.js';
 import { createAdminServer } from './admin/server.js';
 
@@ -23,6 +25,22 @@ async function main() {
 
   // 1) Baza va boshlang'ich ma'lumotlar
   seedIfEmpty();
+
+  // VAQTINCHALIK: parolni tiklash. RESET_ADMIN_PASSWORD o'zgaruvchisi berilsa, bosh administrator
+  // paroli shunga almashadi. Kirgach, bu o'zgaruvchini O'CHIRIB tashlang!
+  const resetPassword = (process.env.RESET_ADMIN_PASSWORD || '').trim();
+  if (resetPassword) {
+    const admin = adminModel.findByUsername(config.seed.adminUsername) ?? adminModel.list()[0];
+    if (!admin) {
+      log.warn('Parolni tiklash: administrator topilmadi');
+    } else if (resetPassword.length < 8) {
+      log.warn('Parolni tiklash: yangi parol kamida 8 belgi bo‘lishi kerak');
+    } else {
+      adminModel.setPassword(admin.id, hashSync(resetPassword, 12));
+      adminModel.deleteSessionsForAdmin(admin.id);
+      log.warn(`Parolni tiklash bajarildi. Login: "${admin.username}". RESET_ADMIN_PASSWORD ni o'chiring!`);
+    }
+  }
 
   const running = { bot: null, server: null };
 
